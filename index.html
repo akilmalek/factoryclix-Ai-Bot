@@ -43,7 +43,7 @@ body::before{
 }
 .brand-header h1 span{color:var(--orange)}
 .brand-header p{font-size:13px;color:#888;margin-top:4px}
-
+ 
 .chat-wrapper{
   width:100%;max-width:460px;
   background:var(--white);
@@ -83,7 +83,7 @@ body::before{
   border-radius:50%;animation:blink 1.5s infinite;
 }
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-
+ 
 .quick-bar{
   background:#FEFCFA;padding:8px 14px;
   border-bottom:1px solid var(--border);
@@ -98,18 +98,18 @@ body::before{
   cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all 0.18s;
 }
 .chip:hover{background:var(--orange);color:#fff;border-color:var(--orange);transform:translateY(-1px)}
-
+ 
 .messages{
   flex:1;overflow-y:auto;padding:16px;
   display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;
 }
 .messages::-webkit-scrollbar{width:3px}
 .messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
+ 
 .msg{display:flex;gap:8px;align-items:flex-end;animation:slideUp 0.25s ease}
 .msg.user{flex-direction:row-reverse}
 @keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
+ 
 .av{
   width:28px;height:28px;border-radius:50%;
   flex-shrink:0;display:flex;align-items:center;justify-content:center;
@@ -117,7 +117,7 @@ body::before{
 }
 .msg.bot .av{background:linear-gradient(135deg,var(--orange),var(--orange2))}
 .msg.user .av{background:var(--dark)}
-
+ 
 .bubble{
   max-width:82%;padding:10px 14px;
   border-radius:16px;font-size:13.5px;line-height:1.6;
@@ -129,7 +129,7 @@ body::before{
 .bubble ul li{margin:3px 0;font-size:13px}
 .bubble ol{padding-left:16px;margin:4px 0}
 .bubble ol li{margin:3px 0;font-size:13px}
-
+ 
 /* OPTION BUTTONS IN REPLIES */
 .opt-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .opt{
@@ -140,7 +140,7 @@ body::before{
   display:inline-flex;align-items:center;gap:4px;
 }
 .opt:hover{background:var(--orange);color:#fff;border-color:var(--orange);transform:translateY(-1px)}
-
+ 
 .typing{display:flex;gap:8px;align-items:flex-end}
 .typing-bub{
   background:#F2EFE9;border-radius:16px;border-bottom-left-radius:4px;
@@ -150,7 +150,7 @@ body::before{
 .td:nth-child(2){animation-delay:.2s}
 .td:nth-child(3){animation-delay:.4s}
 @keyframes tdot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
-
+ 
 .input-area{padding:12px;border-top:1px solid var(--border);background:#fff;flex-shrink:0;}
 .input-row{
   display:flex;gap:8px;align-items:center;
@@ -175,18 +175,18 @@ textarea.mi::placeholder{color:#bbb}
 }
 .send:hover{transform:scale(1.08);box-shadow:0 4px 15px rgba(232,80,10,0.4)}
 .send svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.2}
-
+ 
 .footer{text-align:center;padding:7px;font-size:10px;color:#ccc;background:#fff;flex-shrink:0;}
 .footer span{color:var(--orange);font-weight:600}
 </style>
 </head>
 <body>
-
+ 
 <div class="brand-header">
   <h1>Factory<span>Clix</span> AI Bot</h1>
   <p>Industrial B2B/B2C E-Commerce Assistant</p>
 </div>
-
+ 
 <div class="chat-wrapper">
   <div class="chat-header">
     <div class="bot-avatar">🤖</div>
@@ -195,9 +195,9 @@ textarea.mi::placeholder{color:#bbb}
       <div class="bot-status"><div class="status-dot"></div> Online — Abhi Active Hai</div>
     </div>
   </div>
-
+ 
   <div class="quick-bar">
-    <div class="chip" onclick="qs('Products dekhne hain')">🔍 Products</div>
+    <div class="chip" onclick="qs('Safety products dekhne hain')">🔍 Products</div>
     <div class="chip" onclick="qs('Order track karna hai')">📦 Track Order</div>
     <div class="chip" onclick="qs('Return karna hai')">↩️ Return</div>
     <div class="chip" onclick="qs('Payment problem hai')">💳 Payment</div>
@@ -205,7 +205,7 @@ textarea.mi::placeholder{color:#bbb}
     <div class="chip" onclick="qs('Delivery kab aayegi')">🚚 Delivery</div>
     <div class="chip" onclick="qs('Discount code chahiye')">🏷️ Discount</div>
   </div>
-
+ 
   <div class="messages" id="msgs">
     <div class="msg bot">
       <div class="av">FC</div>
@@ -221,7 +221,7 @@ textarea.mi::placeholder{color:#bbb}
       </div>
     </div>
   </div>
-
+ 
   <div class="input-area">
     <div class="input-row">
       <textarea class="mi" id="inp" placeholder="Kuch bhi poochho — Hindi ya English mein..." rows="1"
@@ -231,26 +231,26 @@ textarea.mi::placeholder{color:#bbb}
       </button>
     </div>
   </div>
-
+ 
   <div class="footer">Powered by <span>FactoryClix AI</span> • Groq LLaMA</div>
 </div>
-
+ 
 <script>
 let hist = [];
 let te = null;
-
+ 
 async function send() {
   const inp = document.getElementById('inp');
   const txt = inp.value.trim();
   if (!txt) return;
-
+ 
   addMsg('user', txt);
   inp.value=''; ar(inp);
   hist.push({role:'user', content:txt});
   showTyping();
-
+ 
   try {
-    const r = await fetch('/.netlify/functions/chat', {
+    const r = await fetch('/api/chat', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({ messages: hist })
@@ -265,37 +265,37 @@ async function send() {
     addMsg('bot','⚠️ Connection issue aayi. Thodi der mein dobara try karein.');
   }
 }
-
+ 
 // Parse bot reply — extract buttons if [BUTTONS: ...] present
 function addBotMsg(text) {
   const msgs = document.getElementById('msgs');
   const d = document.createElement('div');
   d.className = 'msg bot';
-
+ 
   const av = document.createElement('div');
   av.className = 'av';
   av.textContent = 'FC';
-
+ 
   const bubble = document.createElement('div');
   bubble.className = 'bubble';
-
+ 
   // Check for BUTTONS tag
   const btnMatch = text.match(/\[BUTTONS:(.*?)\]/s);
   let cleanText = text;
   let buttons = [];
-
+ 
   if (btnMatch) {
     cleanText = text.replace(btnMatch[0], '').trim();
     buttons = btnMatch[1].split('|').map(b => b.trim()).filter(Boolean);
   }
-
+ 
   // Format text
   const formatted = cleanText
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br>');
-
+ 
   bubble.innerHTML = formatted;
-
+ 
   // Add buttons if present
   if (buttons.length > 0) {
     const optRow = document.createElement('div');
@@ -309,13 +309,13 @@ function addBotMsg(text) {
     });
     bubble.appendChild(optRow);
   }
-
+ 
   d.appendChild(av);
   d.appendChild(bubble);
   msgs.appendChild(d);
   msgs.scrollTop = msgs.scrollHeight;
 }
-
+ 
 function addMsg(role, text) {
   const msgs = document.getElementById('msgs');
   const d = document.createElement('div');
@@ -330,7 +330,7 @@ function addMsg(role, text) {
   msgs.appendChild(d);
   msgs.scrollTop = msgs.scrollHeight;
 }
-
+ 
 function showTyping() {
   const msgs = document.getElementById('msgs');
   te = document.createElement('div');
