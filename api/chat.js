@@ -82,7 +82,7 @@ IMPORTANT RULES:
         'Authorization': `Bearer ${GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model: 'llama3-8b-8192',
         max_tokens: 500,
         temperature: 0.4,
         messages: [
