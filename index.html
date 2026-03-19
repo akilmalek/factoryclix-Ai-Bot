@@ -262,7 +262,9 @@ async function send() {
     addBotMsg(reply);
   } catch(e) {
     hideTyping();
-    addMsg('bot','⚠️ Connection issue aayi. Thodi der mein dobara try karein.');
+    // Error pe galat history entry remove karo
+    hist.pop();
+    addMsg('bot','⚠️ Thodi problem aayi! Dobara try karo 😊');
   }
 }
  
