@@ -77,7 +77,7 @@ RULES:
         'X-Title': 'FactoryClix AI Bot'
       },
       body: JSON.stringify({
-        model: 'meta-llama/llama-3.1-8b-instruct:free',
+        model: 'mistralai/mistral-7b-instruct:free',
         max_tokens: 500,
         temperature: 0.4,
         messages: [
