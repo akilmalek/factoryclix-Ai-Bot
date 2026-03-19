@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   try {
     const { messages } = req.body;
-    const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+    const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
     const systemPrompt = `You are FactoryClix AI Assistant — a friendly, helpful customer service chatbot for FactoryClix, an industrial B2B/B2C e-commerce website based in India.
 
@@ -68,29 +68,33 @@ RULES:
 - Complex issues: Main aapko team se connect karta hoon
 - Always give specific prices`;
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
+        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+        'HTTP-Referer': 'https://factoryclix-ai-bot.vercel.app',
+        'X-Title': 'FactoryClix AI Bot'
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5',
+        model: 'meta-llama/llama-3.1-8b-instruct:free',
         max_tokens: 500,
-        system: systemPrompt,
-        messages: messages
+        temperature: 0.4,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          ...messages
+        ]
       })
     });
 
     const data = await response.json();
 
     if (data.error) {
-      console.error('Claude error:', data.error);
+      console.error('OpenRouter error:', data.error);
       return res.status(500).json({ error: data.error.message });
     }
 
-    const reply = data.content?.[0]?.text || 'Kuch problem aayi, dobara try karein.';
+    const reply = data.choices?.[0]?.message?.content || 'Kuch problem aayi, dobara try karein.';
 
     return res.status(200).json({
       content: [{ type: 'text', text: reply }]
