@@ -77,7 +77,7 @@ RULES:
         'X-Title': 'FactoryClix AI Bot'
       },
       body: JSON.stringify({
-        model: 'mistralai/mistral-7b-instruct:free',
+        model: 'google/gemma-3-4b-it:free',
         max_tokens: 500,
         temperature: 0.4,
         messages: [
